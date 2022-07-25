@@ -1,0 +1,22 @@
+{
+	"songs": [
+		["Song1", "face", [146, 113, 253]],
+                ["Song2", "face", [34, 51, 68]]
+	],
+
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"weekBackground": "",
+
+	"storyName": "Ass",
+	"difficulties": "hard",
+	"weekBefore": "week1",
+	"weekName": "Week 1",
+	"startUnlocked": true,
+
+	"hideStoryMode": false,
+	"hideFreeplay": false
+}
