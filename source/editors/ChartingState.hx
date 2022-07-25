@@ -1,8 +1,5 @@
 package editors;
 
-#if desktop
-import Discord.DiscordClient;
-#end
 import openfl.Lib;
 import Conductor.BPMChangeEvent;
 import Section.SwagSection;
@@ -226,11 +223,6 @@ class ChartingState extends MusicBeatState
 		//Paths.clearMemory();
 
 		Lib.application.window.title = "Friday Night Funkin' - Chart Editor";
-
-		#if desktop
-		// Updating Discord Rich Presence
-		DiscordClient.changePresence("Chart Editor", StringTools.replace(_song.song, '-', ' '));
-		#end
 
 		vortex = FlxG.save.data.chart_vortex;
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));

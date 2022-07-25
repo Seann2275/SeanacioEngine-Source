@@ -1,8 +1,5 @@
 package;
 
-#if desktop
-import Discord.DiscordClient;
-#end
 import openfl.Lib;
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -23,7 +20,6 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineVersion:String = ''; //This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -67,10 +63,6 @@ class MainMenuState extends MusicBeatState
 
 		Lib.application.window.title = "Friday Night Funkin'"; 
 
-		#if desktop
-		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Menus", null);
-		#end
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 
 		camGame = new FlxCamera();
@@ -198,7 +190,6 @@ class MainMenuState extends MusicBeatState
 			FlxTween.tween(text, {alpha: 1}, 0.5, {ease: FlxEase.expoInOut});
 
 			if (controls.ACCEPT) {
-				DiscordClient.shutdown();
 				Sys.exit(1);
 			}
 			else if (controls.BACK)

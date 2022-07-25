@@ -27,10 +27,6 @@ import Type.ValueType;
 import Controls;
 import DialogueBoxPsych;
 
-#if desktop
-import Discord;
-#end
-
 using StringTools;
 
 class EditorLua {
@@ -179,8 +175,6 @@ class EditorLua {
 				return;
 			}
 		});
-
-		Discord.DiscordClient.addLuaCallbacks(lua);
 
 		call('onCreate', []);
 		#end

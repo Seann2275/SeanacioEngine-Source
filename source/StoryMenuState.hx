@@ -1,8 +1,5 @@
 package;
 
-#if desktop
-import Discord.DiscordClient;
-#end
 import openfl.Lib;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -106,12 +103,7 @@ class StoryMenuState extends MusicBeatState
 		grpWeekCharacters = new FlxTypedGroup<MenuCharacter>();
 
 		grpLocks = new FlxTypedGroup<FlxSprite>();
-		add(grpLocks);
-
-		#if desktop
-		// Updating Discord Rich Presence
-		DiscordClient.changePresence("StoryMenu", null);
-		#end			
+		add(grpLocks);		
 
 		var num:Int = 0;
 		for (i in 0...WeekData.weeksList.length)
