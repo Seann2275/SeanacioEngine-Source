@@ -433,23 +433,6 @@ class PlayState extends MusicBeatState
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 
-		#if desktop
-		storyDifficultyText = CoolUtil.difficulties[storyDifficulty];
-
-		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
-		if (isStoryMode)
-		{
-			detailsText = "Story Mode: " + WeekData.getCurrentWeek().weekName;
-		}
-		else
-		{
-			detailsText = "Freeplay";
-		}
-
-		// String for when the game is paused
-		detailsPausedText = "Paused - " + detailsText;
-		#end
-
 		GameOverSubstate.resetVariables();
 		var songName:String = Paths.formatToSongPath(SONG.song);
 
@@ -684,7 +667,7 @@ class PlayState extends MusicBeatState
 		}
 		updateTime = showTime;	
 
-		timeSongTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, SONG.song + " - " + "(" + storyDifficultyText + ")", 16);
+		timeSongTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, SONG.song + " - " + "(" + CoolUtil.difficulties[storyDifficulty] + ")", 16);
 		timeSongTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeSongTxt.scrollFactor.set();
 		timeSongTxt.alpha = 0;
