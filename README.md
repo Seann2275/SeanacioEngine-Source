@@ -2,21 +2,7 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ![logo](https://user-images.githubusercontent.com/109459148/180726795-e7db871f-6cac-458e-b47e-f9bf05fb8611.png)
 
-Seanacio Engine a modification of PsychEngine.
-
-**Installation:**
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
-
-Follow a Friday Night Funkin' source code compilation tutorial, after this you will need to install LuaJIT.
-
-To install LuaJIT do this: haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit on a Command prompt/PowerShell
-
-...Or if you don't want your mod to be able to run .lua scripts, delete the "LUA_ALLOWED" line on Project.xml
-
-If you get an error about StatePointer when using Lua, run haxelib remove linc_luajit into Command Prompt/PowerShell, then re-install linc_luajit.
-
-If you want video support on your mod, simply do haxelib install hxCodec on a Command prompt/PowerShell
+Seanacio Engine the most Shitty Engine.
 
 **Here's a full list of Seanacio Engine's features:**
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -39,3 +25,11 @@ If you want video support on your mod, simply do haxelib install hxCodec on a Co
 **People who helped me:**
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 * **PortilizenHub** for helping me with optimization stuff (not the option shit) and other shit
+
+**Compile Shit:**
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+You must have [the most up-to-date version of Haxe](https://haxe.org/download/), seriously, stop using 4.1.5, it misses some stuff.
+
+If you dont want video support, simply type **haxelib remove hxCodec** on a Command prompt/PowerShell
+
+**Updating This Again When I Have Something On My Mind**
