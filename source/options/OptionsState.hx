@@ -1,5 +1,8 @@
 package options;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -52,6 +55,10 @@ class OptionsState extends MusicBeatState
 	var selectorRight:Alphabet;
 
 	override function create() {
+		#if desktop
+		DiscordClient.changePresence("Options Menu", null);
+		#end
+
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));		
 		bg.color = 0xFFea71fd;
 		bg.updateHitbox();

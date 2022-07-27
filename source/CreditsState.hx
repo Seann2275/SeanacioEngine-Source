@@ -1,5 +1,8 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import openfl.Lib;
 import flash.text.TextField;
 import flixel.FlxG;
@@ -38,6 +41,11 @@ class CreditsState extends MusicBeatState
 		
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
+
+		#if desktop
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("Credits Menu", null);
+		#end
 
 		persistentUpdate = true;
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));		

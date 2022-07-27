@@ -1,8 +1,13 @@
 package;
 
+//Seanacio Engine Modified Version Of Pscyh Engine
+
 import editors.WeekEditorState.WeekEditorFreeplayState;
 import flixel.util.FlxSpriteUtil;
 import flixel.graphics.FlxGraphic;
+#if desktop
+import Discord.DiscordClient;
+#end
 import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
@@ -314,6 +319,13 @@ class PlayState extends MusicBeatState
 	public var opponentCameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;	
 
+	#if desktop
+	// Discord RPC variables
+	var storyDifficultyText:String = "";
+	var detailsText:String = "";
+	var detailsPausedText:String = "";
+	#end
+
 	//Achievement shit
 	var keysPressed:Array<Bool> = [];
 	var boyfriendIdleTime:Float = 0.0;
@@ -432,6 +444,23 @@ class PlayState extends MusicBeatState
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
+
+		#if desktop
+		storyDifficultyText = CoolUtil.difficulties[storyDifficulty];
+
+		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
+		if (isStoryMode)
+		{
+			detailsText = "Story Mode: " + WeekData.getCurrentWeek().weekName;
+		}
+		else
+		{
+			detailsText = "Freeplay";
+		}
+
+		// String for when the game is paused
+		detailsPausedText = "Paused - " + detailsText;
+		#end
 
 		GameOverSubstate.resetVariables();
 		var songName:String = Paths.formatToSongPath(SONG.song);
@@ -667,7 +696,7 @@ class PlayState extends MusicBeatState
 		}
 		updateTime = showTime;	
 
-		timeSongTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, SONG.song + " - " + "(" + CoolUtil.difficulties[storyDifficulty] + ")", 16);
+		timeSongTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, SONG.song + " - " + "(" + storyDifficultyText + ")", 16);
 		timeSongTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeSongTxt.scrollFactor.set();
 		timeSongTxt.alpha = 0;
@@ -1037,6 +1066,11 @@ class PlayState extends MusicBeatState
 		} else if(ClientPrefs.pauseMusic != 'None') {
 			precacheList.set(Paths.formatToSongPath(ClientPrefs.pauseMusic), 'music');
 		}
+
+		#if desktop
+		// Updating Discord Rich Presence.
+		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+		#end
 
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000;
 		callOnLuas('onCreatePost', []);
@@ -1682,6 +1716,10 @@ class PlayState extends MusicBeatState
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
 
+		#if desktop
+		// Updating Discord Rich Presence (with Time Left)
+		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength);
+		#end
 		setOnLuas('songLength', songLength);
 		callOnLuas('onSongStart', []);
 	}
@@ -2078,6 +2116,17 @@ class PlayState extends MusicBeatState
 			}
 			paused = false;
 			callOnLuas('onResume', []);
+
+			#if desktop
+			if (startTimer != null && startTimer.finished)
+			{
+				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength - Conductor.songPosition - ClientPrefs.noteOffset);
+			}
+			else
+			{
+				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+			}
+			#end
 		}
 
 		super.closeSubState();
@@ -2085,13 +2134,31 @@ class PlayState extends MusicBeatState
 
 	override public function onFocus():Void
 	{
-
+		#if desktop
+		if (health > 0 && !paused)
+		{
+			if (Conductor.songPosition > 0.0)
+			{
+				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength - Conductor.songPosition - ClientPrefs.noteOffset);
+			}
+			else
+			{
+				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+			}
+		}
+		#end
 
 		super.onFocus();
 	}
 
 	override public function onFocusLost():Void
 	{
+		#if desktop
+		if (health > 0 && !paused)
+		{
+			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+		}
+		#end
 
 		super.onFocusLost();
 	}
@@ -2383,7 +2450,9 @@ class PlayState extends MusicBeatState
 				}
 				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
-
+				#if desktop
+				DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+				#end
 			}
 		}
 
@@ -2760,7 +2829,9 @@ class PlayState extends MusicBeatState
 		cancelMusicFadeTween();
 		MusicBeatState.switchState(new ChartingState());
 
-
+		#if desktop
+		DiscordClient.changePresence("Chart Editor", null, null, true);
+		#end
 	}
 
 	function flashWhite()
@@ -3016,7 +3087,10 @@ class PlayState extends MusicBeatState
 
 				// MusicBeatState.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
-
+				#if desktop
+				// Game Over doesn't get his own variable because it's only used here
+				DiscordClient.changePresence("Game Over - " + detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+				#end
 				isDead = true;
 				return true;
 			}
@@ -4313,6 +4387,7 @@ class PlayState extends MusicBeatState
 		    //	errMsg += "Error: YOU SUCK!";
 	        //
 		    //	Application.current.window.alert(errMsg, "Error!");
+		    //	DiscordClient.shutdown();
 		    //	Sys.exit(1);
 		    //}
             notes.forEach(function(note:Note){

@@ -1,5 +1,8 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import openfl.Lib;
 import editors.ChartingState;
 import flash.text.TextField;
@@ -59,6 +62,11 @@ class FreeplayState extends MusicBeatState
 		persistentUpdate = true;
 		PlayState.isStoryMode = false;
 		WeekData.reloadWeekFiles(false);	
+
+		#if desktop
+		// Updating Discord Rich Presence
+		DiscordClient.changePresence("Freeplay", null);
+		#end
 
 		for (i in 0...WeekData.weeksList.length) {
 			if(weekIsLocked(WeekData.weeksList[i])) continue;

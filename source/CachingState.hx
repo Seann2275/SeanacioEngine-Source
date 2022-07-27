@@ -12,6 +12,9 @@ import flixel.util.FlxTimer;
 import flixel.text.FlxText;
 import flixel.system.FlxSound;
 import lime.app.Application;
+#if windows
+import Discord.DiscordClient;
+#end
 import openfl.display.BitmapData;
 import openfl.utils.Assets;
 import haxe.Exception;
