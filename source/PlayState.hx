@@ -4279,21 +4279,6 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
-		if (camZooming2 && FlxG.camera.zoom < 1.35)
-		{
-			FlxG.camera.zoom += 0.030 * camZoomingMult;
-			camZooming = false;
-			if(camtween != null) {
-				camtween.cancel();
-			}
-			camHUD.zoom = 1.05;
-			camtween = FlxTween.tween(camHUD, {zoom: 1}, 0.2, {
-				onComplete: function(twn:FlxTween) {
-					camtween = null;
-				}
-			});				
-		}
-
 		if(lastBeatHit >= curBeat) {
 			return;
 		}
@@ -4320,7 +4305,21 @@ class PlayState extends MusicBeatState
 		if (generatedMusic && PlayState.SONG.notes[Std.int(curStep / 16)] != null && !endingSong && !isCameraOnForcedPos)
 		{
 			moveCameraSection(Std.int(curStep / 16));
-		}	
+		}
+
+		if (curBeat % 4 == 0){
+			FlxG.camera.zoom += 0.030;
+			camZooming2 = true;
+			if(camtween != null) {
+				camtween.cancel();
+			}
+			camHUD.zoom = 1.05;
+			camtween = FlxTween.tween(camHUD, {zoom: 1}, 0.2, {
+				onComplete: function(twn:FlxTween) {
+					camtween = null;
+				}
+			});	
+		}
 
         if (curBeat % 2 == 0){		
 			iconP1.angle = -8;
