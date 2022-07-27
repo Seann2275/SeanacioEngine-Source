@@ -272,7 +272,8 @@ class ChartingState extends MusicBeatState
 		bpmTxt.scrollFactor.set();
 		add(bpmTxt);
 
-		strumLine = new FlxSprite(0, 50).makeGraphic(Std.int(GRID_SIZE * 9), 4);
+		strumLine = new FlxSprite(0, 50).makeGraphic(Std.int(GRID_SIZE * 8), 4);
+		strumLine.x += GRID_SIZE;
 		add(strumLine);
 
 		quant = new AttachedSprite('chart_quant','chart_quant');
@@ -349,7 +350,7 @@ class ChartingState extends MusicBeatState
 
 		zoomTxt = new FlxText(10, 10, 0, "Zoom: 1x", 16);
 		zoomTxt.scrollFactor.set();
-		add(zoomTxt);
+		//add(zoomTxt);
 
 		updateGrid();
 		super.create();
@@ -400,7 +401,7 @@ class ChartingState extends MusicBeatState
 			MusicBeatState.resetState();
 		});
 
-		var clear_notes:FlxButton = new FlxButton(350, reloadSongJson.y + 140, 'Clear notes', function()
+		var clear_notes:FlxButton = new FlxButton(340, reloadSongJson.y + 140, 'Clear notes', function()
 			{
 				openSubState(new Prompt('This action will clear current progress.\n\nProceed?', 0, function(){for (sec in 0..._song.notes.length) {
 					_song.notes[sec].sectionNotes = [];
@@ -1647,7 +1648,8 @@ class ChartingState extends MusicBeatState
 
 	function reloadGridLayer() {
 		gridLayer.clear();
-		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
+		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 32);
+		gridBG.x += GRID_SIZE;
 		gridLayer.add(gridBG);
 
 		#if desktop
@@ -1656,11 +1658,13 @@ class ChartingState extends MusicBeatState
 		}
 		#end
 
-		var gridBlack:FlxSprite = new FlxSprite(0, gridBG.height / 2).makeGraphic(Std.int(GRID_SIZE * 9), Std.int(gridBG.height / 2), FlxColor.BLACK);
+		var gridBlack:FlxSprite = new FlxSprite(0, gridBG.height / 2).makeGraphic(Std.int(GRID_SIZE * 8), Std.int(gridBG.height / 2), FlxColor.BLACK);
+		gridBlack.x += GRID_SIZE;
 		gridBlack.alpha = 0.4;
 		gridLayer.add(gridBlack);
 
 		var gridBlackLine:FlxSprite = new FlxSprite(gridBG.x + gridBG.width - (GRID_SIZE * 4)).makeGraphic(2, Std.int(gridBG.height), FlxColor.BLACK);
+		//gridBlackLine.x += GRID_SIZE;
 		gridLayer.add(gridBlackLine);
 
 		for (i in 1...4){
@@ -1669,6 +1673,7 @@ class ChartingState extends MusicBeatState
 		}
 
 		gridBlackLine = new FlxSprite(gridBG.x + gridBG.width / 2).makeGraphic(2, Std.int(gridBG.height), FlxColor.BLACK);
+		//gridBlackLine.x += GRID_SIZE;
 		gridLayer.add(gridBlackLine);
 		updateGrid();
 	}
@@ -2285,9 +2290,6 @@ class ChartingState extends MusicBeatState
 
 	private function addNote(strum:Null<Float> = null, data:Null<Int> = null, type:Null<Int> = null):Void
 	{
-		//curUndoIndex++;
-		//var newsong = _song.notes;
-	//	undos.push(newsong);
 		didAThing = true;
 		trace(undos);
 		var noteStrum = getStrumTime(dummyArrow.y, false) + sectionStartTime();

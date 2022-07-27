@@ -76,6 +76,8 @@ class PlayState extends MusicBeatState
 {
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
+	public static var camFollowDadNote = 20;
+	public static var camFollowBFNote = 20; // idk why i made literally same variable	
 
 	public static var ratingStuff:Array<Dynamic> = [
 		['BOZO!', 0.2], //0% to 19%
@@ -1389,6 +1391,10 @@ class PlayState extends MusicBeatState
 		new FlxTimer().start(0.3, function(tmr:FlxTimer) {
 		    dad.playAnim('singRIGHT', true);
 			boyfriend.playAnim('singRIGHT', true);
+		});
+		new FlxTimer().start(0.4, function(tmr:FlxTimer) {
+		    dad.playAnim('idle', true);
+			boyfriend.playAnim('idle', true);
 		});
 
 		if (ClientPrefs.getGameplaySetting('botplay', true)) {	
@@ -3744,31 +3750,27 @@ class PlayState extends MusicBeatState
 	        camHUD.shake(0.005, 0.05);
 		}
 
-		notes.forEach(function(note:Note){
-		var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];	
-		if (!note.isSustainNote) {
-			switch (animToPlay)
-			{
-				case 'singUP':
-					camFollow.y -= 40;
-				case 'singDOWN':
-					camFollow.y += 40;
-				case 'singLEFT':
-					camFollow.x -= 40;
-				case 'singRIGHT':
-					camFollow.x += 40;
-
-				case 'singUP-alt':
-					camFollow.y -= 40;
-				case 'singDOWN-alt':
-					camFollow.y += 40;
-				case 'singLEFT-alt':
-					camFollow.x -= 40;
-				case 'singRIGHT-alt':
-					camFollow.x += 40;
-			}
-		}
-		});
+		if(SONG.notes[Math.floor(curStep / 16)].mustHitSection == false && !note.isSustainNote)
+		{
+			if (!dad.stunned)
+				{
+					switch(Std.int(Math.abs(note.noteData)))
+					{
+						case 0:
+							camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+							camFollow.x += dad.cameraPosition[0] - camFollowDadNote; camFollow.y += dad.cameraPosition[1];
+						case 1:
+							camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+							camFollow.x += dad.cameraPosition[0]; camFollow.y += dad.cameraPosition[1] + camFollowDadNote;
+						case 2:
+							camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+							camFollow.x += dad.cameraPosition[0]; camFollow.y += dad.cameraPosition[1] - camFollowDadNote;
+						case 3:							
+							camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+							camFollow.x += dad.cameraPosition[0] + camFollowDadNote; camFollow.y += dad.cameraPosition[1];
+					}                   
+				}
+		} 
 
 		if(note.noteType == 'Hey!' && dad.animOffsets.exists('hey')) {
 			dad.playAnim('hey', true);
@@ -3845,22 +3847,22 @@ class PlayState extends MusicBeatState
 				switch (animToPlay)
 				{
 					case 'singUP':
-						camFollow.y -= 40;
+						camFollow.y = boyfriend.getMidpoint().x - 30;
 					case 'singDOWN':
-						camFollow.y += 40;
+						camFollow.y = boyfriend.getMidpoint().x + 30;
 					case 'singLEFT':
-						camFollow.x -= 40;
+						camFollow.x = boyfriend.getMidpoint().x - 30;
 					case 'singRIGHT':
-						camFollow.x += 40;
+						camFollow.x = boyfriend.getMidpoint().x + 30;
 	
 					case 'singUP-alt':
-						camFollow.y -= 40;
+						camFollow.y = boyfriend.getMidpoint().x - 30;
 					case 'singDOWN-alt':
-						camFollow.y += 40;
+						camFollow.y = boyfriend.getMidpoint().x + 30;
 					case 'singLEFT-alt':
-						camFollow.x -= 40;
+						camFollow.x = boyfriend.getMidpoint().x - 30;
 					case 'singRIGHT-alt':
-						camFollow.x += 40;
+						camFollow.x = boyfriend.getMidpoint().x + 30;
 				}
 			}
 		    });
@@ -3916,6 +3918,25 @@ class PlayState extends MusicBeatState
 				{
 					boyfriend.playAnim(animToPlay + note.animSuffix, true);
 					boyfriend.holdTimer = 0;
+
+					if(SONG.notes[Math.floor(curStep / 16)].mustHitSection == true && !note.isSustainNote) {
+						if (!boyfriend.stunned){
+							switch(Std.int(Math.abs(note.noteData))){				 
+								case 0:
+									camFollow.set(boyfriend.getMidpoint().x - 150, boyfriend.getMidpoint().y - 100);
+									camFollow.x += boyfriend.cameraPosition[0] - camFollowBFNote; camFollow.y += boyfriend.cameraPosition[1];	
+								case 1:
+									camFollow.set(boyfriend.getMidpoint().x - 150, boyfriend.getMidpoint().y - 100);
+									camFollow.x += boyfriend.cameraPosition[0]; camFollow.y += boyfriend.cameraPosition[1] + camFollowBFNote;			
+								case 2:
+									camFollow.set(boyfriend.getMidpoint().x - 150, boyfriend.getMidpoint().y - 100);
+									camFollow.x += boyfriend.cameraPosition[0]; camFollow.y += boyfriend.cameraPosition[1] - camFollowBFNote;
+								case 3:							
+									camFollow.set(boyfriend.getMidpoint().x - 150, boyfriend.getMidpoint().y - 100);
+									camFollow.x += boyfriend.cameraPosition[0] + camFollowBFNote; camFollow.y += boyfriend.cameraPosition[1];			
+							}                        
+						}
+					}					
 				}
 
 				if(note.noteType == 'Hey!') {
@@ -4258,6 +4279,21 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
+		if (camZooming2 && FlxG.camera.zoom < 1.35)
+		{
+			FlxG.camera.zoom += 0.030 * camZoomingMult;
+			camZooming = false;
+			if(camtween != null) {
+				camtween.cancel();
+			}
+			camHUD.zoom = 1.05;
+			camtween = FlxTween.tween(camHUD, {zoom: 1}, 0.2, {
+				onComplete: function(twn:FlxTween) {
+					camtween = null;
+				}
+			});				
+		}
+
 		if(lastBeatHit >= curBeat) {
 			return;
 		}
@@ -4284,31 +4320,13 @@ class PlayState extends MusicBeatState
 		if (generatedMusic && PlayState.SONG.notes[Std.int(curStep / 16)] != null && !endingSong && !isCameraOnForcedPos)
 		{
 			moveCameraSection(Std.int(curStep / 16));
-		}
-		
-		if (curBeat % 4 == 0 && camZooming2 && FlxG.camera.zoom < 1.35)
-		{
-			FlxG.camera.zoom += 0.030;
-			camZooming = false;
-			camZooming2 = true;
-			if(camtween != null) {
-				camtween.cancel();
-			}
-			camHUD.zoom = 1.05;
-			camtween = FlxTween.tween(camHUD, {zoom: 1}, 0.2, {
-				onComplete: function(twn:FlxTween) {
-					camtween = null;
-				}
-			});	
 		}	
 
         if (curBeat % 2 == 0){		
-			iconP1.angle = 8;
-			iconP2.angle = -8;	
+			iconP1.angle = -8;
+			iconP2.angle = 8;	
 		    iconP1.setGraphicSize(Std.int(iconP1.width + 40));
 		    iconP2.setGraphicSize(Std.int(iconP2.width + 40));
-			FlxTween.tween(iconP1, {angle: 0}, Conductor.crochet/222, {ease: FlxEase.circOut});
-		    FlxTween.tween(iconP2, {angle: 0}, Conductor.crochet/222, {ease: FlxEase.circOut});
 		}
 		else
 		{
@@ -4316,8 +4334,6 @@ class PlayState extends MusicBeatState
 			iconP2.angle = -8;
 			iconP1.setGraphicSize(Std.int(iconP1.width + 40));
 			iconP2.setGraphicSize(Std.int(iconP2.width + 40));
-			FlxTween.tween(iconP1, {angle: 0}, Conductor.crochet/222, {ease: FlxEase.circOut});
-		    FlxTween.tween(iconP2, {angle: 0}, Conductor.crochet/222, {ease: FlxEase.circOut});
 		}	
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
