@@ -109,7 +109,6 @@ class ChartingState extends MusicBeatState
 	var gridMult:Int = 2;
 
 	var daquantspot = 0;
-	var curEventSelected:Int = 0;
 	var curUndoIndex = 0;
 	var curRedoIndex = 0;
 	var _song:SwagSong;
@@ -2168,17 +2167,6 @@ class ChartingState extends MusicBeatState
 			}
 			note.sustainLength = daSus;
 			note.noteType = i[3];
-		} else { //Event note
-			note.loadGraphic(Paths.image(''));
-			note.eventName = getEventName(i[1]);
-			note.eventLength = i[1].length;
-			if(i[1].length < 2)
-			{
-				note.eventVal1 = i[1][0][1];
-				note.eventVal2 = i[1][0][2];
-			}
-			note.noteData = -1;
-			daNoteInfo = -1;
 		}
 
 		note.setGraphicSize(GRID_SIZE, GRID_SIZE);
@@ -2194,19 +2182,6 @@ class ChartingState extends MusicBeatState
 
 		note.y = (GRID_SIZE * (isNextSection ? 16 : 0)) * zoomList[curZoom] + Math.floor(getYfromStrum((daStrumTime - sectionStartTime(isNextSection ? 1 : 0)) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps), false));
 		return note;
-	}
-
-	function getEventName(names:Array<Dynamic>):String
-	{
-		var retStr:String = '';
-		var addedOne:Bool = false;
-		for (i in 0...names.length)
-		{
-			if(addedOne) retStr += ', ';
-			retStr += names[i][0];
-			addedOne = true;
-		}
-		return retStr;
 	}
 
 	function setupSusNote(note:Note):FlxSprite {
@@ -2434,7 +2409,6 @@ class ChartingState extends MusicBeatState
 
 	private function saveLevel()
 	{
-		_song.events.sort(sortByTime);
 		var json = {
 			"song": _song
 		};
@@ -2449,11 +2423,6 @@ class ChartingState extends MusicBeatState
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 			_file.save(data.trim(), Paths.formatToSongPath(_song.song) + ".json");
 		}
-	}
-
-	function sortByTime(Obj1:Array<Dynamic>, Obj2:Array<Dynamic>):Int
-	{
-		return FlxSort.byValues(FlxSort.ASCENDING, Obj1[0], Obj2[0]);
 	}
 
 	function onSaveComplete(_):Void
