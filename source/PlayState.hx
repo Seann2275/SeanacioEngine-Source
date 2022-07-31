@@ -3532,6 +3532,15 @@ class PlayState extends MusicBeatState
 		return -1;
 	}
 
+	/*TODO LIST:
+	REVERT TO OLD 
+	LIKE REMOVE % 4 STUFF AGAIN AND FIX EVERYTHING
+	LIKE
+	YKNOW
+	I FORGOT TO ADD THE IF (!CLIENTWHATEVER) INPUT CODE
+	THE STATE SHOULD BE NEXT TO THIS PLAYSTATE.HX
+	*/
+
 	// Hold notes
 	private function keyShit():Void
 	{
@@ -3540,7 +3549,7 @@ class PlayState extends MusicBeatState
 		var right = controls.NOTE_RIGHT;
 		var down = controls.NOTE_DOWN;
 		var left = controls.NOTE_LEFT;
-		var controlHoldArray:Array<Bool> = [left, down, up, right];
+		var controlHoldArray:Array<Bool> = [left, down, up, right];	
 
 		// FlxG.watch.addQuick('asdfa', upP);
 		if (startedCountdown && !boyfriend.stunned && generatedMusic)
