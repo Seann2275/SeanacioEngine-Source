@@ -919,7 +919,7 @@ class FunkinLua {
 			PlayState.instance.RecalculateRating();
 		});
 		Lua_helper.add_callback(lua, "addMisses", function(value:Int = 0) {
-			PlayState.instance.songMisses += value;
+			PlayState.instance.comboBreaks += value;
 			PlayState.instance.RecalculateRating();
 		});
 		Lua_helper.add_callback(lua, "addHits", function(value:Int = 0) {
@@ -931,7 +931,7 @@ class FunkinLua {
 			PlayState.instance.RecalculateRating();
 		});
 		Lua_helper.add_callback(lua, "setMisses", function(value:Int = 0) {
-			PlayState.instance.songMisses = value;
+			PlayState.instance.comboBreaks = value;
 			PlayState.instance.RecalculateRating();
 		});
 		Lua_helper.add_callback(lua, "setHits", function(value:Int = 0) {
@@ -942,7 +942,7 @@ class FunkinLua {
 			return PlayState.instance.songScore;
 		});
 		Lua_helper.add_callback(lua, "getMisses", function() {
-			return PlayState.instance.songMisses;
+			return PlayState.instance.comboBreaks;
 		});
 		Lua_helper.add_callback(lua, "getHits", function() {
 			return PlayState.instance.songHits;

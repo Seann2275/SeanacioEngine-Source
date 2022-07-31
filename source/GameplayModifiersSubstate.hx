@@ -38,17 +38,6 @@ class GameplayModifiersSubstate extends MusicBeatSubstate
 
 	function getOptions()
 	{
-		var option:GameplayOption = new GameplayOption('Playback Rate', 
-		'songspeed', 
-		'float', 
-		1);
-		option.scrollSpeed = 1; 
-		option.minValue = 0.5;
-		option.maxValue = 2.5;  
-		option.changeValue = 0.1;
-		option.displayFormat = '%vX';
-		optionsArray.push(option);			
-
 		var option:GameplayOption = new GameplayOption('Instakill on Miss', 
 		'instakill', 
 		'bool', 
