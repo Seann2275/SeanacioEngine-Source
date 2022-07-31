@@ -14,7 +14,6 @@ import flixel.addons.transition.TransitionData;
 import haxe.Json;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
-import options.GraphicsSettingsSubState;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;

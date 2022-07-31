@@ -149,8 +149,6 @@ class FunkinLua {
 		set('gfSection', false);
 
 		// Gameplay settings
-		set('healthGainMult', PlayState.instance.healthGain);
-		set('healthLossMult', PlayState.instance.healthLoss);
 		set('instakillOnMiss', PlayState.instance.instakillOnMiss);
 		set('botPlay', PlayState.instance.cpuControlled);
 		set('practice', PlayState.instance.practiceMode);

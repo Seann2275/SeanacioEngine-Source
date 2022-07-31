@@ -76,6 +76,10 @@ class CreditsState extends MusicBeatState
 			if(isSelectable) {
 				optionText.x -= 70;
 			}
+
+			descText.x = optionText.x;
+			descText.y = optionText.y + 50;
+
 			optionText.forceX = optionText.x;
 			//optionText.yMult = 90;
 			optionText.targetY = i;
@@ -100,7 +104,7 @@ class CreditsState extends MusicBeatState
 			}
 		}
 
-		descText = new FlxText(optionText, optionText + 50, 1180, "", 32);
+		descText = new FlxText(0, 0, 1180, "", 32);
 		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
 		descText.scrollFactor.set();
 		add(descText);

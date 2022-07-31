@@ -97,4 +97,18 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 	{
 		FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
 	}
+
+	function onChangeFramerate()
+	{
+		if(ClientPrefs.framerate > FlxG.drawFramerate)
+		{
+			FlxG.updateFramerate = ClientPrefs.framerate;
+			FlxG.drawFramerate = ClientPrefs.framerate;
+		}
+		else
+		{
+			FlxG.drawFramerate = ClientPrefs.framerate;
+			FlxG.updateFramerate = ClientPrefs.framerate;
+		}
+	}	
 }

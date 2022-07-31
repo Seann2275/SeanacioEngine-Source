@@ -365,7 +365,7 @@ class FreeplayState extends MusicBeatState
 		if(ctrl)
 		{
 			persistentUpdate = false;
-			openSubState(new GameplayChangersSubstate());
+			openSubState(new GameplayModifiersSubstate());
 		}
 
 		else if (accepted)

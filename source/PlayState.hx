@@ -983,8 +983,6 @@ class PlayState extends MusicBeatState
 
 		if (PauseSubState.songName != null) {
 			precacheList.set(PauseSubState.songName, 'music');
-		} else if(ClientPrefs.pauseMusic != 'None') {
-			precacheList.set(Paths.formatToSongPath(ClientPrefs.pauseMusic), 'music');
 		}
 
 		#if desktop
@@ -1815,8 +1813,6 @@ class PlayState extends MusicBeatState
 			if (songSpeedTween != null)
 				songSpeedTween.active = false;
 
-			if(carTimer != null) carTimer.active = false;
-
 			var chars:Array<Character> = [boyfriend, gf, dad];
 			for (char in chars) {
 				if(char != null && char.colorTween != null) {
@@ -1850,8 +1846,6 @@ class PlayState extends MusicBeatState
 				finishTimer.active = true;
 			if (songSpeedTween != null)
 				songSpeedTween.active = true;
-
-			if(carTimer != null) carTimer.active = true;
 
 			var chars:Array<Character> = [boyfriend, gf, dad];
 			for (char in chars) {

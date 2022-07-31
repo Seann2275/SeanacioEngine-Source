@@ -93,8 +93,8 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			optionText.targetY = i;
 			grpOptions.add(optionText);
 
-			descText.x = optionText;
-			descText.y = optionText + 50;
+			descText.x = optionText.x;
+			descText.y = optionText.y + 50;
 
 			if(optionsArray[i].type == 'bool') {
 				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
