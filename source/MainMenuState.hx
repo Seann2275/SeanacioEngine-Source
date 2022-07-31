@@ -149,7 +149,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.updateHitbox();
 		    new FlxTimer().start(0.001, function(tmr:FlxTimer)
 		    {
-	            FlxTween.tween(menuItem, {x: -260}, durationIn, {type:PERSIST, ease:FlxEase.backInOut, startDelay: 0.1 + (0.2 * i)});
+	            FlxTween.tween(menuItem, {x: -999}, durationIn, {type:PERSIST, ease:FlxEase.backInOut, startDelay: 0.1 + (0.2 * i)});
 		    });			
 		}
 

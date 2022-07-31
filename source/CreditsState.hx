@@ -30,7 +30,6 @@ class CreditsState extends MusicBeatState
 	var descText:FlxText;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
-	var descBox:AttachedSprite;
 
 	var offsetThing:Float = -75;
 
@@ -56,7 +55,11 @@ class CreditsState extends MusicBeatState
 		add(grpOptions);
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
-			["No Credits Added"]
+			["Funkin Team"],
+			['ninjamuffin99',		'face',	"Programmer of FNF",							'https://twitter.com/ninja_muffin99',	'CF2D2D'],
+			['PhantomArcade',		'face',	"Animator of FNF",								'https://twitter.com/PhantomArcade3K',	'FADC45'],
+			['evilsk8r',			'face',			"Artist of FNF",								'https://twitter.com/evilsk8r',			'5ABD4B'],
+			['kawaisprite',			'face',		"Composer of FNF",								'https://twitter.com/kawaisprite',		'378FC7']
 		];
 		
 		for(i in pisspoop){
@@ -96,20 +99,10 @@ class CreditsState extends MusicBeatState
 				if(curSelected == -1) curSelected = i;
 			}
 		}
-		
-		descBox = new AttachedSprite();
-		descBox.makeGraphic(1, 1, FlxColor.BLACK);
-		descBox.xAdd = -10;
-		descBox.yAdd = -10;
-		descBox.alphaMult = 0.6;
-		descBox.alpha = 0.6;
-		add(descBox);
 
-		descText = new FlxText(50, FlxG.height + offsetThing - 25, 1180, "", 32);
+		descText = new FlxText(optionText, optionText + 50, 1180, "", 32);
 		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
 		descText.scrollFactor.set();
-		//descText.borderSize = 2.4;
-		descBox.sprTracker = descText;
 		add(descText);
 
 		bg.color = getCurrentBGColor();
@@ -235,9 +228,6 @@ class CreditsState extends MusicBeatState
 
 		if(moveTween != null) moveTween.cancel();
 		moveTween = FlxTween.tween(descText, {y : descText.y + 75}, 0.25, {ease: FlxEase.sineOut});
-
-		descBox.setGraphicSize(Std.int(descText.width + 20), Std.int(descText.height + 25));
-		descBox.updateHitbox();
 	}
 
 	function getCurrentBGColor() {

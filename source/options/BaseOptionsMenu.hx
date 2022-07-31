@@ -38,7 +38,6 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	private var grpTexts:FlxTypedGroup<AttachedText>;
 
 	private var boyfriend:Character = null;
-	private var descBox:FlxSprite;
 	private var descText:FlxText;
 
 	public var title:String;
@@ -71,17 +70,13 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		checkboxGroup = new FlxTypedGroup<CheckboxThingie>();
 		add(checkboxGroup);
 
-		descBox = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
-		descBox.alpha = 0.6;
-		add(descBox);
-
 		var titleText:Alphabet = new Alphabet(0, 0, title, true, false, 0, 0.6);
 		titleText.x += 60;
 		titleText.y += 40;
 		titleText.alpha = 0.4;
 		add(titleText);
 
-		descText = new FlxText(50, 600, 1180, "", 32);
+		descText = new FlxText(0, 0, 1180, "", 32);
 		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		descText.scrollFactor.set();
 		descText.borderSize = 2.4;
@@ -97,6 +92,9 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			optionText.xAdd = 200;
 			optionText.targetY = i;
 			grpOptions.add(optionText);
+
+			descText.x = optionText;
+			descText.y = optionText + 50;
 
 			if(optionsArray[i].type == 'bool') {
 				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);
@@ -314,10 +312,6 @@ class BaseOptionsMenu extends MusicBeatSubstate
 				text.alpha = 1;
 			}
 		}
-
-		descBox.setPosition(descText.x - 10, descText.y - 10);
-		descBox.setGraphicSize(Std.int(descText.width + 20), Std.int(descText.height + 25));
-		descBox.updateHitbox();
 
 		if(boyfriend != null)
 		{

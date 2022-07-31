@@ -34,13 +34,20 @@ class VisualsUISubState extends BaseOptionsMenu
 		title = 'Visuals and UI';
 		rpcTitle = 'Visuals & UI Settings Menu'; //for Discord Rich Presence
 
+		var option:Option = new Option('Optimization',
+			"If checked, Removes unnecessary Graphics.",
+			'optimization',
+			'bool',
+			false);
+		addOption(option);		
+
 		var option:Option = new Option('Note Splashes',
 			"If unchecked, hitting Special Notes won't show particles.",
 			'noteSplashes',
 			'bool',
 			true);
 		addOption(option);
-
+				
 		var option:Option = new Option('Health Bar Transparency',
 			'How much transparent should the health bar and icons be.',
 			'healthBarAlpha',
@@ -53,7 +60,6 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.decimals = 1;
 		addOption(option);
 		
-		#if !mobile
 		var option:Option = new Option('FPS Counter',
 			'If unchecked, hides FPS Counter.',
 			'showFPS',
@@ -61,7 +67,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
-		#end
+
+		var option:Option = new Option('Low Quality',
+			'If checked, Lowers the quality of the bg and the arrows,\ndecreases loading times and improves performance.',
+			'lowQuality',
+			'bool',
+			false);
+		addOption(option);
 
 		super();
 	}
