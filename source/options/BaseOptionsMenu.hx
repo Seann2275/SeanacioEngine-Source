@@ -76,8 +76,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		titleText.alpha = 0.4;
 		add(titleText);
 
-		descText = new FlxText(0, 0, 1180, "", 32);
-		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		descText = new FlxText(155, 60, 0, "", 32);
+		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		descText.width = -310;
+		descText.textSize = 1 / 3;
 		descText.scrollFactor.set();
 		descText.borderSize = 2.4;
 		add(descText);
@@ -92,9 +94,6 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			optionText.xAdd = 200;
 			optionText.targetY = i;
 			grpOptions.add(optionText);
-
-			descText.x = optionText.x;
-			descText.y = optionText.y + 50;
 
 			if(optionsArray[i].type == 'bool') {
 				var checkbox:CheckboxThingie = new CheckboxThingie(optionText.x - 105, optionText.y, optionsArray[i].getValue() == true);

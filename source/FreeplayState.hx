@@ -49,7 +49,9 @@ class FreeplayState extends MusicBeatState
 	var week1:FlxSprite;
 	var week2:FlxSprite;
 	var intendedColor:Int;
-	var colorTween:FlxTween;	
+	var colorTween:FlxTween;
+	
+	var grid:FlxBackdrop = new FlxBackdrop(Paths.image('freeplaymenu/Grid'), 0.2, 0.2, true, true);
 
 	override function create()
 	{
@@ -105,13 +107,16 @@ class FreeplayState extends MusicBeatState
 			}
 		}*/
 
-		week1 = new FlxSprite().loadGraphic(Paths.image('Week1'));		
+		week1 = new FlxSprite().loadGraphic(Paths.image('freeplaymenu/Week1'));		
 		week1.screenCenter();
 		add(week1);		
 
-		week2 = new FlxSprite().loadGraphic(Paths.image('Week2'));		
+		week2 = new FlxSprite().loadGraphic(Paths.image('freeplaymenu/Week2'));		
 		week2.screenCenter();
-		add(week2);		
+		add(week2);	
+		
+		grid.scrollFactor.set(0.07,0);	
+		add(grid);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
@@ -234,6 +239,9 @@ class FreeplayState extends MusicBeatState
 	{
         if (FlxG.sound.music != null)
             Conductor.songPosition = FlxG.sound.music.time;	
+
+		grid.x -= 0.45 / (ClientPrefs.framerate / 60);
+		grid.y -= 0.16 / (ClientPrefs.framerate / 60);
 					
 		if (FlxG.sound.music.volume < 0.7)
 		{
