@@ -1,8 +1,5 @@
 package;
 
-//Seanacio Engine Modified Version Of Pscyh Engine
-//NOT ANYMORE
-
 import editors.WeekEditorState.WeekEditorFreeplayState;
 import flixel.util.FlxSpriteUtil;
 import flixel.graphics.FlxGraphic;
@@ -759,27 +756,30 @@ class PlayState extends MusicBeatState
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
 		healthBar.alpha = 0;
-		// healthBar
-		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		healthBarBG.sprTracker = healthBar;
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.antialiasing = ClientPrefs.globalAntialiasing;	
 		iconP1.alpha = 0;
 		iconP1.y = healthBar.y - 75;
-		iconP1.alpha = ClientPrefs.healthBarAlpha;
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
 		iconP2.antialiasing = ClientPrefs.globalAntialiasing;	
 		iconP2.alpha = 0;
 		iconP2.y = healthBar.y - 75;
-		iconP2.alpha = ClientPrefs.healthBarAlpha;
 
 		reloadHealthBarColors();
 		add(healthBar);
 		add(healthBarBG);
 		add(iconP1);
 		add(iconP2);
+	
+		if (ClientPrefs.getGameplaySetting('fucknent', true)) {
+			healthBarBG.flipX = true;
+			healthBar.flipX = true;
+			iconP1 = new HealthIcon(dad.healthIcon, true);
+			iconP2 = new HealthIcon(boyfriend.healthIcon, false);
+		}	
 
 		scoreTxt = new FlxText(0, healthBarBG.y + 26, FlxG.width, "", 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -789,7 +789,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.borderSize = 1.25;
 		add(scoreTxt);
 
-		ratingCounter1 = new FlxText(6, healthBarBG.y + -296, FlxG.width, "", 16); 
+		ratingCounter1 = new FlxText(6, healthBarBG.y + -295, FlxG.width, "", 16); 
 		ratingCounter1.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		ratingCounter1.antialiasing = ClientPrefs.globalAntialiasing;
 		ratingCounter1.scrollFactor.set();
@@ -797,7 +797,7 @@ class PlayState extends MusicBeatState
 		ratingCounter1.borderSize = 1.25;
 		add(ratingCounter1);
 		if (ClientPrefs.downScroll) {
-			ratingCounter1.y = healthBarBG.y + 294; 	
+			ratingCounter1.y = healthBarBG.y + 293; 	
 		}				
 
 		ratingCounter2 = new FlxText(6, healthBarBG.y + -268, FlxG.width, "", 16); 
@@ -1352,6 +1352,23 @@ class PlayState extends MusicBeatState
 			for (i in 0...playerStrums.length) {
 				setOnLuas('defaultPlayerStrumX' + i, playerStrums.members[i].x);
 				setOnLuas('defaultPlayerStrumY' + i, playerStrums.members[i].y);
+				if (ClientPrefs.getGameplaySetting('fucknent', true)) {
+					opponentStrums.members[0].x = 732;
+					opponentStrums.members[1].x = 844;
+					opponentStrums.members[2].x = 956;
+					opponentStrums.members[3].x = 1068;
+					playerStrums.members[0].x = 90;
+					playerStrums.members[1].x = 202;
+					playerStrums.members[2].x = 314;
+					playerStrums.members[3].x = 426;
+				}
+				else if (ClientPrefs.getGameplaySetting('fucknent', true) && ClientPrefs.optimization) {
+					playerStrums.members[0].x = 416;
+					playerStrums.members[1].x = 528;
+					playerStrums.members[2].x = 640;
+					playerStrums.members[3].x = 754;
+				}
+				
 				if (ClientPrefs.optimization) {
 					playerStrums.members[0].x = 416;
 					playerStrums.members[1].x = 528;
@@ -1362,7 +1379,7 @@ class PlayState extends MusicBeatState
 			for (i in 0...opponentStrums.length) {
 				setOnLuas('defaultOpponentStrumX' + i, opponentStrums.members[i].x);
 				setOnLuas('defaultOpponentStrumY' + i, opponentStrums.members[i].y);
-				if (ClientPrefs.optimization) opponentStrums.members[i].x = -1408;	
+				if (ClientPrefs.optimization) opponentStrums.members[i].x = -200;	
 			}
 
 			startedCountdown = true;
@@ -2166,14 +2183,14 @@ class PlayState extends MusicBeatState
 		setOnLuas('curDecStep', curDecStep);
 		setOnLuas('curDecBeat', curDecBeat);
 
-		scoreTxt.text = 'Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' + ' -- Score: ' + songScore + ' -- Combo Breaks: ' + comboBreaks;
+		scoreTxt.text = 'Accuracy: ' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%' + ' | Score: ' + songScore + ' | Combo Breaks: ' + comboBreaks;
 		ratingCounter1.text = 'Rating: ' + ratingFC;
 		ratingCounter2.text = 'Sicks: '  + sicks;
 		ratingCounter3.text = 'Goods: '  + goods;
 		ratingCounter4.text = 'Bads: '  + bads;
 		ratingCounter5.text = 'Shits: '  + shits;
 	    if (ClientPrefs.getGameplaySetting('botplay', true)) {	
-		    scoreTxt.text = 'Accuracy: ' + '0%' + ' -- Score: ' + '0' + ' -- Combo Breaks: ' + '0';
+		    scoreTxt.text = 'Accuracy: ' + '0%' + ' | Score: ' + '0' + ' | Combo Breaks: ' + '0';
 		    ratingCounter1.text = 'Rating: ' + 'You Suck!';
 		    ratingCounter2.text = 'Sicks: '  + '0';
 		    ratingCounter3.text = 'Goods: '  + '0';
@@ -2183,7 +2200,7 @@ class PlayState extends MusicBeatState
 		if(ratingName != '0%')
 			scoreTxt.text += '';
 	    if (ClientPrefs.getGameplaySetting('botplay', true)) {	
-		scoreTxt.text = 'Accuracy: ' + '0%' + ' -- Score: ' + '0' + ' -- Combo Breaks: ' + '0';
+		scoreTxt.text = 'Accuracy: ' + '0%' + ' | Score: ' + '0' + ' | Combo Breaks: ' + '0';
 		ratingCounter1.text = 'Rating: ' + 'You Suck!';
 		ratingCounter2.text = 'Sicks: '  + '0';
 		ratingCounter3.text = 'Goods: '  + '0';
@@ -3295,8 +3312,7 @@ class PlayState extends MusicBeatState
 
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
 		rating.screenCenter();
-		rating.x = coolText.x - 20;
-		//rating.x = coolText.x - 40;
+		rating.x = coolText.x + 60;
 		rating.y -= 60;
 		rating.acceleration.y = 550;
 		rating.velocity.y -= FlxG.random.int(140, 175);
@@ -3305,9 +3321,7 @@ class PlayState extends MusicBeatState
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
 		comboSpr.screenCenter();
 		comboSpr.x = coolText.x + 60;
-		//////////////////////////////
-        comboSpr.y += 200;///////////
-        ////////////////////////////
+        comboSpr.y = rating.y + 20;
 		comboSpr.acceleration.y = 600;
 		comboSpr.velocity.y -= 150;
 
@@ -3685,23 +3699,22 @@ class PlayState extends MusicBeatState
 		if(SONG.notes[Math.floor(curStep / 16)].mustHitSection == false && !note.isSustainNote)
 		{
 			if (!dad.stunned)
+			{
+				switch(Std.int(Math.abs(note.noteData)))
 				{
-					switch(Std.int(Math.abs(note.noteData)))
-					{
-						case 0:
-							camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
-							camFollow.x += dad.cameraPosition[0] - camFollowDadNote; camFollow.y += dad.cameraPosition[1];
-						case 1:
-							camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
-							camFollow.x += dad.cameraPosition[0]; camFollow.y += dad.cameraPosition[1] + camFollowDadNote;
-						case 2:
-							camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
-							camFollow.x += dad.cameraPosition[0]; camFollow.y += dad.cameraPosition[1] - camFollowDadNote;
-						case 3:							
-							camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
-							camFollow.x += dad.cameraPosition[0] + camFollowDadNote; camFollow.y += dad.cameraPosition[1];
-					}                   
-				}
+					case 0: camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+						    camFollow.x += dad.cameraPosition[0] - camFollowDadNote; camFollow.y += dad.cameraPosition[1];
+
+					case 1: camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+						    camFollow.x += dad.cameraPosition[0]; camFollow.y += dad.cameraPosition[1] + camFollowDadNote;
+
+					case 2: camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+						    camFollow.x += dad.cameraPosition[0]; camFollow.y += dad.cameraPosition[1] - camFollowDadNote;
+
+					case 3: camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
+						    camFollow.x += dad.cameraPosition[0] + camFollowDadNote; camFollow.y += dad.cameraPosition[1];
+				}                   
+			}
 		} 
 
 		if(note.noteType == 'Hey!' && dad.animOffsets.exists('hey')) {
@@ -3827,20 +3840,20 @@ class PlayState extends MusicBeatState
 					boyfriend.holdTimer = 0;
 
 					if(SONG.notes[Math.floor(curStep / 16)].mustHitSection == true && !note.isSustainNote) {
-						if (!boyfriend.stunned){
+						if (!boyfriend.stunned)
+						{
 							switch(Std.int(Math.abs(note.noteData))){				 
-								case 0:
-									camFollow.set(boyfriend.getMidpoint().x - 150, boyfriend.getMidpoint().y - 100);
-									camFollow.x += boyfriend.cameraPosition[0] - camFollowBFNote; camFollow.y += boyfriend.cameraPosition[1];	
-								case 1:
-									camFollow.set(boyfriend.getMidpoint().x - 150, boyfriend.getMidpoint().y - 100);
-									camFollow.x += boyfriend.cameraPosition[0]; camFollow.y += boyfriend.cameraPosition[1] + camFollowBFNote;			
-								case 2:
-									camFollow.set(boyfriend.getMidpoint().x - 150, boyfriend.getMidpoint().y - 100);
-									camFollow.x += boyfriend.cameraPosition[0]; camFollow.y += boyfriend.cameraPosition[1] - camFollowBFNote;
-								case 3:							
-									camFollow.set(boyfriend.getMidpoint().x - 150, boyfriend.getMidpoint().y - 100);
-									camFollow.x += boyfriend.cameraPosition[0] + camFollowBFNote; camFollow.y += boyfriend.cameraPosition[1];			
+								case 0: camFollow.set(boyfriend.getMidpoint().x - 150, boyfriend.getMidpoint().y - 100);
+									    camFollow.x += boyfriend.cameraPosition[0] - camFollowBFNote; camFollow.y += boyfriend.cameraPosition[1];
+
+								case 1: camFollow.set(boyfriend.getMidpoint().x - 150, boyfriend.getMidpoint().y - 100);
+									    camFollow.x += boyfriend.cameraPosition[0]; camFollow.y += boyfriend.cameraPosition[1] + camFollowBFNote;
+
+								case 2: camFollow.set(boyfriend.getMidpoint().x - 150, boyfriend.getMidpoint().y - 100);
+									    camFollow.x += boyfriend.cameraPosition[0]; camFollow.y += boyfriend.cameraPosition[1] - camFollowBFNote;
+
+								case 3:	camFollow.set(boyfriend.getMidpoint().x - 150, boyfriend.getMidpoint().y - 100);
+									    camFollow.x += boyfriend.cameraPosition[0] + camFollowBFNote; camFollow.y += boyfriend.cameraPosition[1];			
 							}                        
 						}
 					}					

@@ -38,6 +38,12 @@ class GameplayModifiersSubstate extends MusicBeatSubstate
 
 	function getOptions()
 	{
+		var option:GameplayOption = new GameplayOption('Play As Opponent', 
+		'fucknent', 
+		'bool', 
+		false);
+		optionsArray.push(option);
+
 		var option:GameplayOption = new GameplayOption('Instakill on Miss', 
 		'instakill', 
 		'bool', 

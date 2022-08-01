@@ -11,7 +11,6 @@ import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.addons.display.FlxBackdrop;
 import flixel.math.FlxMath;
 import flixel.util.FlxTimer;
 import flixel.text.FlxText;
@@ -51,8 +50,6 @@ class FreeplayState extends MusicBeatState
 	var week2:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
-	
-	var grid:FlxBackdrop = new FlxBackdrop(Paths.image('freeplaymenu/Grid'), 0.2, 0.2, true, true);
 
 	override function create()
 	{
@@ -115,9 +112,6 @@ class FreeplayState extends MusicBeatState
 		week2 = new FlxSprite().loadGraphic(Paths.image('freeplaymenu/Week2'));		
 		week2.screenCenter();
 		add(week2);	
-
-		grid.scrollFactor.set(0.07,0);	
-		add(grid);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
@@ -275,7 +269,23 @@ class FreeplayState extends MusicBeatState
 		var ctrl = FlxG.keys.justPressed.CONTROL;
 
 		var shiftMult:Int = 1;
-		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;	
+		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
+
+		if(songs[curSelected].songName == 'Song1' && FlxG.justPressed.ENTER && ClientPrefs.getGameplaySetting('fucknent', true)) {
+		    PlayState.SONG = Song.loadFromJson("497830485739", "nentlay4903124");
+		    PlayState.isStoryMode = false;
+		    PlayState.storyDifficulty = 1;
+    
+		    LoadingState.loadAndSwitchState(new PlayState());
+		}
+		else if(songs[curSelected].songName == 'Song2' && FlxG.justPressed.ENTER && ClientPrefs.getGameplaySetting('fucknent', true))
+		{
+		    PlayState.SONG = Song.loadFromJson("982347398474", "nentlay4903124");
+		    PlayState.isStoryMode = false;
+		    PlayState.storyDifficulty = 1;
+    
+		    LoadingState.loadAndSwitchState(new PlayState());
+		}
 
 		if(songs[curSelected].songName == 'Song2') {
 			Conductor.changeBPM(103.5);
