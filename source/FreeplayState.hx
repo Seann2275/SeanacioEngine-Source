@@ -11,6 +11,7 @@ import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.addons.display.FlxBackdrop;
 import flixel.math.FlxMath;
 import flixel.util.FlxTimer;
 import flixel.text.FlxText;
@@ -114,7 +115,7 @@ class FreeplayState extends MusicBeatState
 		week2 = new FlxSprite().loadGraphic(Paths.image('freeplaymenu/Week2'));		
 		week2.screenCenter();
 		add(week2);	
-		
+
 		grid.scrollFactor.set(0.07,0);	
 		add(grid);
 

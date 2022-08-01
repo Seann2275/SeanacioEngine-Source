@@ -79,7 +79,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		descText = new FlxText(155, 60, 0, "", 32);
 		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		descText.width = -310;
-		descText.textSize = 1 / 3;
+		descText.setSize = 1 / 3;
 		descText.scrollFactor.set();
 		descText.borderSize = 2.4;
 		add(descText);
