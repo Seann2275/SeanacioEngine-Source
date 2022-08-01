@@ -234,9 +234,6 @@ class FreeplayState extends MusicBeatState
 	{
         if (FlxG.sound.music != null)
             Conductor.songPosition = FlxG.sound.music.time;	
-
-		grid.x -= 0.45 / (ClientPrefs.framerate / 60);
-		grid.y -= 0.16 / (ClientPrefs.framerate / 60);
 					
 		if (FlxG.sound.music.volume < 0.7)
 		{
@@ -271,14 +268,14 @@ class FreeplayState extends MusicBeatState
 		var shiftMult:Int = 1;
 		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
 
-		if(songs[curSelected].songName == 'Song1' && FlxG.justPressed.ENTER && ClientPrefs.getGameplaySetting('fucknent', true)) {
+		if(songs[curSelected].songName == 'Song1' && FlxG.keys.justPressed.ENTER && ClientPrefs.getGameplaySetting('fucknent', true)) {
 		    PlayState.SONG = Song.loadFromJson("497830485739", "nentlay4903124");
 		    PlayState.isStoryMode = false;
 		    PlayState.storyDifficulty = 1;
     
 		    LoadingState.loadAndSwitchState(new PlayState());
 		}
-		else if(songs[curSelected].songName == 'Song2' && FlxG.justPressed.ENTER && ClientPrefs.getGameplaySetting('fucknent', true))
+		else if(songs[curSelected].songName == 'Song2' && FlxG.keys.justPressed.ENTER && ClientPrefs.getGameplaySetting('fucknent', true))
 		{
 		    PlayState.SONG = Song.loadFromJson("982347398474", "nentlay4903124");
 		    PlayState.isStoryMode = false;
