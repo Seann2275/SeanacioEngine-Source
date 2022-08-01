@@ -9,6 +9,7 @@ Seanacio Engine the most Shitty Engine.
 * Better Botplay
 * Better Inputs
 * Diffrent Opponent And Player Notes
+* Play As Opponent Option
 * Judgement Counter
 * Results Screen
 * Custom Freeplaymenu
