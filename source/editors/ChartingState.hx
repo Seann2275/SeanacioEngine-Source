@@ -85,7 +85,6 @@ class ChartingState extends MusicBeatState
 
 	var camPos:FlxObject;
 	var strumLine:FlxSprite;
-	var quant:AttachedSprite;
 	var strumLineNotes:FlxTypedGroup<StrumNote>;
 	var curSong:String = 'Dadbattle';
 	var amountSteps:Int = 0;
@@ -275,14 +274,6 @@ class ChartingState extends MusicBeatState
 		strumLine = new FlxSprite(0, 50).makeGraphic(Std.int(GRID_SIZE * 8), 4);
 		strumLine.x += GRID_SIZE;
 		add(strumLine);
-
-		quant = new AttachedSprite('chart_quant','chart_quant');
-		quant.animation.addByPrefix('q','chart_quant',0,false);
-		quant.animation.play('q', true, false, 0);
-		quant.sprTracker = strumLine;
-		quant.xAdd = -32;
-		quant.yAdd = 8;
-		add(quant);
 
 		strumLineNotes = new FlxTypedGroup<StrumNote>();
 		for (i in 0...8){
@@ -1517,7 +1508,7 @@ class ChartingState extends MusicBeatState
 
 		_song.bpm = tempBpm;
 
-		strumLineNotes.visible = quant.visible = vortex;
+		strumLineNotes.visible = vortex;
 
 		if(FlxG.sound.music.time < 0) {
 			FlxG.sound.music.pause();

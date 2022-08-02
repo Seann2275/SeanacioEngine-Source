@@ -757,13 +757,6 @@ class PlayState extends MusicBeatState
 		add(healthBarBG);
 		add(iconP1);
 		add(iconP2);
-	
-		if (ClientPrefs.getGameplaySetting('fucknent', true)) {
-			healthBarBG.flipX = true;
-			healthBar.flipX = true;
-			iconP1 = new HealthIcon(dad.healthIcon, true);
-			iconP2 = new HealthIcon(boyfriend.healthIcon, false);
-		}	
 
 		scoreTxt = new FlxText(0, healthBarBG.y + 26, FlxG.width, "", 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1030,8 +1023,8 @@ class PlayState extends MusicBeatState
 	}
 
 	public function reloadHealthBarColors() {
-		healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
-			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
+		    healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
+			    FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));			
 
 		healthBar.updateBar();
 	}
@@ -1336,6 +1329,7 @@ class PlayState extends MusicBeatState
 			for (i in 0...playerStrums.length) {
 				setOnLuas('defaultPlayerStrumX' + i, playerStrums.members[i].x);
 				setOnLuas('defaultPlayerStrumY' + i, playerStrums.members[i].y);
+				/*
 				if (ClientPrefs.getGameplaySetting('fucknent', true)) {
 					opponentStrums.members[0].x = 732;
 					opponentStrums.members[1].x = 844;
@@ -1352,6 +1346,7 @@ class PlayState extends MusicBeatState
 					playerStrums.members[2].x = 640;
 					playerStrums.members[3].x = 754;
 				}
+				*/
 
 				if (ClientPrefs.optimization) {
 					playerStrums.members[0].x = 416;
@@ -1581,22 +1576,41 @@ class PlayState extends MusicBeatState
 	{
 		startingSong = false;
 
-		FlxTween.tween(skipText, {alpha: 1}, 0.2);
+		FlxTween.tween(skipText, {alpha: 1}, 0.5);
 
-		FlxTween.tween(timeSongTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(timeBarBG, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(healthBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(healthBarBG, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(iconP1, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(iconP2, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(scoreTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(ratingCounter1, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(ratingCounter2, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(ratingCounter3, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(ratingCounter4, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(ratingCounter5, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		FlxTween.tween(engineWatermark, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(timeSongTxt, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+		FlxTween.tween(timeBar, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+		FlxTween.tween(timeBarBG, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+		FlxTween.tween(healthBar, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+		FlxTween.tween(healthBarBG, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+		FlxTween.tween(iconP1, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+		FlxTween.tween(iconP2, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+		FlxTween.tween(scoreTxt, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+		FlxTween.tween(ratingCounter1, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+		FlxTween.tween(ratingCounter2, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+		FlxTween.tween(ratingCounter3, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+		FlxTween.tween(ratingCounter4, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+		FlxTween.tween(ratingCounter5, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+		FlxTween.tween(engineWatermark, {alpha: 1}, 0.2, {ease: FlxEase.circOut});
+
+		/*
+		if(ClientPrefs.getGameplaySetting('fucknent', true) && curSong.toLowerCase() == 'Song1') {
+		    PlayState.SONG = Song.loadFromJson("497830485739", "nentlay4903124");
+		    PlayState.isStoryMode = false;
+		    PlayState.storyDifficulty = 1;
+    
+		    LoadingState.loadAndSwitchState(new PlayState());
+		}
+
+		if(ClientPrefs.getGameplaySetting('fucknent', true) && curSong.toLowerCase() == 'Song2')
+		{
+			PlayState.SONG = Song.loadFromJson("982347398474", "nentlay4903124");
+			PlayState.isStoryMode = false;
+			PlayState.storyDifficulty = 1;
+	
+			LoadingState.loadAndSwitchState(new PlayState());
+		}
+		*/		
 
 		previousFrameTime = FlxG.game.ticks;
 		lastReportedPlayheadPosition = 0;
@@ -2743,6 +2757,21 @@ class PlayState extends MusicBeatState
 			}
 		}
 	}
+
+	function missingnoThing() {
+		for (i in opponentStrums)
+			i.alpha = 0;
+		for (i in 0...playerStrums.length) {
+			if (i == 0) {
+				playerStrums.members[i].x = FlxG.random.int(100, Std.int(FlxG.width / 3));
+			} else {
+				var futurex = FlxG.random.int(Std.int(playerStrums.members[i - 1].x) + 80, Std.int(playerStrums.members[i - 1].x) + 400);
+				if (futurex > FlxG.width - 100)
+					futurex = FlxG.width - 100;
+				playerStrums.members[i].x = futurex;
+			}
+		}
+	}	
 
 	function noteReset()
 	{
@@ -4015,8 +4044,152 @@ class PlayState extends MusicBeatState
 					FlxG.camera.zoom -= 0.120;
 			        camHUD.zoom -= 0.08;
 					FlxTween.tween(camGame, {alpha:0}, 0.1, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});					
-				}																																	
-			}					
+				}		
+				case 'Song3':
+					switch (curStep){
+						case 1:				
+							FlxG.camera.flash(FlxColor.BLACK, 6);
+						case 96:
+							camGame.alpha = 0;	
+						case 112:
+							FlxG.camera.flash(FlxColor.WHITE, 0.5);
+							defaultCamZoom = 0.7;												
+							camGame.alpha = 1;	
+						case 128:
+							FlxG.camera.zoom -= 0.120;
+							camHUD.zoom -= 0.08;						
+							FlxG.camera.flash(FlxColor.WHITE, 2);
+						case 160:
+							FlxG.camera.zoom -= 0.120;
+							camHUD.zoom -= 0.08;						
+							FlxG.camera.flash(FlxColor.WHITE, 2);
+						case 192:
+							FlxG.camera.zoom -= 0.120;
+							camHUD.zoom -= 0.08;						
+							FlxG.camera.flash(FlxColor.WHITE, 2);
+						case 224:
+							FlxG.camera.zoom -= 0.120;
+							camHUD.zoom -= 0.08;						
+							FlxG.camera.flash(FlxColor.WHITE, 1);	
+						case 244:					
+							defaultCamZoom = 1;			
+						case 256:
+							FlxG.camera.zoom -= 0.120;
+							camHUD.zoom -= 0.08;						
+							FlxG.camera.flash(FlxColor.WHITE, 2);
+							defaultCamZoom = 0.7;	
+						case 288:
+							FlxG.camera.flash(FlxColor.WHITE, 0.5);
+							camGame.alpha = 0;	
+						case 308:
+							FlxG.camera.flash(FlxColor.WHITE, 0.5);
+							camGame.alpha = 1;
+	
+						case 352:
+							FlxG.camera.flash(FlxColor.WHITE, 0.5);
+							camGame.alpha = 0;	
+						case 372:
+							FlxG.camera.flash(FlxColor.WHITE, 0.5);
+							camGame.alpha = 1;
+	
+						case 320:
+							FlxG.camera.zoom -= 0.120;
+							camHUD.zoom -= 0.08;						
+							FlxG.camera.flash(FlxColor.WHITE, 2);
+						case 384:
+							FlxG.camera.zoom -= 0.120;
+							camHUD.zoom -= 0.08;						
+							FlxG.camera.flash(FlxColor.WHITE, 2);
+						case 416:
+							FlxG.camera.zoom -= 0.120;
+							camHUD.zoom -= 0.08;						
+							FlxG.camera.flash(FlxColor.WHITE, 2);	
+						case 448:
+							FlxG.camera.zoom -= 0.120;
+							camHUD.zoom -= 0.08;						
+							FlxG.camera.flash(FlxColor.WHITE, 2);	
+						case 480:
+							FlxG.camera.zoom -= 0.120;
+							camHUD.zoom -= 0.08;						
+							FlxG.camera.flash(FlxColor.WHITE, 2);
+						case 496:
+							FlxTween.tween(camGame, {alpha: 0}, 1, { ease: FlxEase.cubeInOut});	
+						case 512:
+							floatNote = true;
+							FlxG.camera.flash(FlxColor.WHITE, 1);
+							camGame.alpha = 1;	
+						case 576:
+							defaultCamZoom = 0.9;
+							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							floatNote = false;	
+						case 580:
+							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							defaultCamZoom = 0.6;
+						case 584:
+							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							defaultCamZoom = 0.9;
+						case 588:
+							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							defaultCamZoom = 0.6;
+						case 592:
+							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							defaultCamZoom = 0.9;
+						case 596:
+							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							defaultCamZoom = 0.6;
+						case 600:
+							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							defaultCamZoom = 0.9;
+						case 604:
+							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							defaultCamZoom = 0.6;
+						case 640:
+							FlxTween.tween(camGame, {alpha: 0}, 1, { ease: FlxEase.cubeInOut});	
+							FlxTween.tween(camHUD, {alpha: 0}, 1, { ease: FlxEase.cubeInOut});	
+						case 660:
+							camHUD.alpha = 1;
+							camGame.alpha = 1;
+							for (note in opponentStrums)
+							{
+							FlxTween.tween(opponentStrums.members[0], {x: 416, alpha: 0.4}, 0.0001, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(opponentStrums.members[1], {x: 528, alpha: 0.4}, 0.0001, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(opponentStrums.members[2], {x: 640, alpha: 0.4}, 0.0001, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(opponentStrums.members[3], {x: 754, alpha: 0.4}, 0.0001, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(playerStrums.members[0], {x: 416}, 0.0001, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(playerStrums.members[1], {x: 528}, 0.0001, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(playerStrums.members[2], {x: 640}, 0.0001, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(playerStrums.members[3], {x: 754}, 0.0001, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});						
+							}	
+						case 784 | 785 | 786 | 790 | 791 | 792 | 796 | 798 | 848 | 849 | 850 | 854 | 855 | 856 | 860 | 862:
+							missingnoThing();
+							FlxG.camera.shake(0.010, 0.05);
+							camHUD.shake(0.005, 0.05);
+						case 787 | 793 | 800 | 851 | 857 | 864:
+							for (note in opponentStrums)
+							{
+							FlxTween.tween(opponentStrums.members[0], {x: 416, alpha: 0.4}, 0.2, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(opponentStrums.members[1], {x: 528, alpha: 0.4}, 0.2, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(opponentStrums.members[2], {x: 640, alpha: 0.4}, 0.2, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(opponentStrums.members[3], {x: 754, alpha: 0.4}, 0.2, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(playerStrums.members[0], {x: 416}, 0.2, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(playerStrums.members[1], {x: 528}, 0.2, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(playerStrums.members[2], {x: 640}, 0.2, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});
+							FlxTween.tween(playerStrums.members[3], {x: 754}, 0.2, { ease: FlxEase.cubeInOut, type: FlxTween.PERSIST});						
+							}						
+						case 912:
+							noteReset();																																																																																		
+					}																																					
+			}	
+			
+			switch (curSong){
+				case 'Song3':
+					switch (curBeat){							
+						case 168:
+						Lib.application.window.fullscreen = false;
+						Lib.application.window.maximized = true;
+						windowChill = true;				
+					}	
+		    }			
 	}
 
 	var lightningStrikeBeat:Int = 0;

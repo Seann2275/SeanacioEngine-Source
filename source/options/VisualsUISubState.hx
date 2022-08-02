@@ -47,14 +47,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			true);
 		addOption(option);
-		
-		var option:Option = new Option('FPS Counter',
-			'If unchecked, hides FPS Counter.',
-			'showFPS',
-			'bool',
-			true);
-		addOption(option);
-		option.onChange = onChangeFPSCounter;
 
 		var option:Option = new Option('Low Quality',
 			'If checked, Lowers the quality of the bg and the arrows,\ndecreases loading times and improves performance.',
@@ -62,6 +54,14 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
+
+		var option:Option = new Option('FPS Counter',
+			'If unchecked, hides FPS Counter.',
+			'showFPS',
+			'bool',
+			true);
+		addOption(option);
+		option.onChange = onChangeFPSCounter;		
 
 		super();
 	}

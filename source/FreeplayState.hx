@@ -233,7 +233,7 @@ class FreeplayState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
         if (FlxG.sound.music != null)
-            Conductor.songPosition = FlxG.sound.music.time;	
+            Conductor.songPosition = FlxG.sound.music.time;
 					
 		if (FlxG.sound.music.volume < 0.7)
 		{
@@ -267,22 +267,6 @@ class FreeplayState extends MusicBeatState
 
 		var shiftMult:Int = 1;
 		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
-
-		if(songs[curSelected].songName == 'Song1' && FlxG.keys.justPressed.ENTER && ClientPrefs.getGameplaySetting('fucknent', true)) {
-		    PlayState.SONG = Song.loadFromJson("497830485739", "nentlay4903124");
-		    PlayState.isStoryMode = false;
-		    PlayState.storyDifficulty = 1;
-    
-		    LoadingState.loadAndSwitchState(new PlayState());
-		}
-		else if(songs[curSelected].songName == 'Song2' && FlxG.keys.justPressed.ENTER && ClientPrefs.getGameplaySetting('fucknent', true))
-		{
-		    PlayState.SONG = Song.loadFromJson("982347398474", "nentlay4903124");
-		    PlayState.isStoryMode = false;
-		    PlayState.storyDifficulty = 1;
-    
-		    LoadingState.loadAndSwitchState(new PlayState());
-		}
 
 		if(songs[curSelected].songName == 'Song2') {
 			Conductor.changeBPM(103.5);
