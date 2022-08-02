@@ -4120,28 +4120,28 @@ class PlayState extends MusicBeatState
 							camGame.alpha = 1;	
 						case 576:
 							defaultCamZoom = 0.9;
-							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							FlxG.camera.flash(FlxColor.WHITE, 0.2);
 							floatNote = false;	
 						case 580:
-							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							FlxG.camera.flash(FlxColor.WHITE, 0.2);
 							defaultCamZoom = 0.6;
 						case 584:
-							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							FlxG.camera.flash(FlxColor.WHITE, 0.2);
 							defaultCamZoom = 0.9;
 						case 588:
-							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							FlxG.camera.flash(FlxColor.WHITE, 0.2);
 							defaultCamZoom = 0.6;
 						case 592:
-							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							FlxG.camera.flash(FlxColor.WHITE, 0.2);
 							defaultCamZoom = 0.9;
 						case 596:
-							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							FlxG.camera.flash(FlxColor.WHITE, 0.2);
 							defaultCamZoom = 0.6;
 						case 600:
-							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							FlxG.camera.flash(FlxColor.WHITE, 0.2);
 							defaultCamZoom = 0.9;
 						case 604:
-							FlxG.camera.flash(FlxColor.WHITE, 0.3);
+							FlxG.camera.flash(FlxColor.WHITE, 0.2);
 							defaultCamZoom = 0.6;
 						case 640:
 							FlxTween.tween(camGame, {alpha: 0}, 1, { ease: FlxEase.cubeInOut});	
@@ -4187,6 +4187,7 @@ class PlayState extends MusicBeatState
 						case 168:
 						Lib.application.window.fullscreen = false;
 						Lib.application.window.maximized = true;
+						camSwing = true;
 						windowChill = true;				
 					}	
 		    }			
@@ -4231,6 +4232,24 @@ class PlayState extends MusicBeatState
 		{
 			moveCameraSection(Std.int(curStep / 16));
 		}
+
+        if (curSong.toLowerCase() == 'song3' && curBeat >= 168 && curBeat < 227 && camZooming && FlxG.camera.zoom < 1.35) {
+            var disco:FlxColor = new FlxColor();
+            switch (FlxG.random.int(1, 4))
+            {
+				case 1:
+					disco = FlxColor.fromString('#C660CE');
+				case 2:
+					disco = FlxColor.fromString('#009dff');
+				case 3:
+					disco = FlxColor.fromString('#45f248');
+				case 4:
+					disco = FlxColor.fromString('#FFA500');
+            }
+            FlxG.camera.flash(disco, 0.5, null, true);						
+			FlxG.camera.zoom -= 0.120;
+		    camHUD.zoom -= 0.08;						
+		}		
 
 		if (curBeat % 4 == 0){
 			FlxG.camera.zoom += 0.030;
