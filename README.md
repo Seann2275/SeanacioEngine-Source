@@ -25,7 +25,8 @@ Seanacio Engine the most Shitty Engine.
 
 **People who helped me:**
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-* **PortilizenHub** for helping me with optimization stuff (not the option shit) and other shit
+* **BlueCario123** for helping me with the charting menu stuff.
+* **CAEO** for giving me a mental breakdown.
 
 **Compile Shit:**
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
