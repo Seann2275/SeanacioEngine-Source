@@ -1794,6 +1794,15 @@ class PlayState extends MusicBeatState
 				if(ClientPrefs.middleScroll) targetAlpha = 0.10;
 			}
 
+			var skin:String = "NOTE_assets";
+
+            if (SONG.player2 == "dad" && player == 0)
+                skin = 'DAD_NOTE_assets';
+
+            if (SONG.player2 == "mom" && player == 0)
+                skin = 'MOM_NOTE_assets';	
+					
+
 			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
 			babyArrow.downScroll = ClientPrefs.downScroll;
 			if (!isStoryMode && !skipArrowStartTween)
